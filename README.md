@@ -1,4 +1,11 @@
 # Hacker News Reader
-### Framewors/Tools:
+
+### Frameworks/Tools:
+
 - NextJS
 - TypeScript
+
+### Development Flow Tools
+
+- Prettier
+- husky
