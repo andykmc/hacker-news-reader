@@ -26,18 +26,17 @@ export type NewsStory = {
 };
 
 export const getNewsStory = async (id: number): Promise<NewsStory> => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://hacker-news.firebaseio.com/v0/item/${id}.json`
   );
-  const result = await response.json();
-  return result;
+  return response.data;
 };
 
 export const getAllTopNews = async (): Promise<NewsStory[]> => {
-  const response = await fetch(
+  const response = await axios.get(
     'https://hacker-news.firebaseio.com/v0/topstories.json'
   );
-  const allIds = await response.json();
+  const allIds = await response.data;
   return <NewsStory[]>await Promise.all(
     allIds.slice(0, 20).map(async id => {
       return await getNewsStory(id);
