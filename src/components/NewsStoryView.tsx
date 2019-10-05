@@ -14,11 +14,16 @@ type State = {
 const Wrapper = styled.div`
   margin-left: ${props => props.theme.overhaul.newsListWidth + 20}px;
   padding: 20px;
+  text-align: justify;
 
   * {
     max-width: 100%;
   }
 
+  img {
+    display: block;
+    margin: 32px auto;
+  }
   pre {
     white-space: pre-wrap;
   }
