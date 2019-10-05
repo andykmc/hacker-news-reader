@@ -7,5 +7,8 @@ declare module 'styled-components' {
       main: string;
       secondary: string;
     };
+    overhaul: {
+      newsListWidth: number;
+    };
   }
 }

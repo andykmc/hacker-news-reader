@@ -5,6 +5,9 @@ const readerTheme: DefaultTheme = {
     main: 'cyan',
     secondary: 'magenta',
   },
+  overhaul: {
+    newsListWidth: 250,
+  },
 };
 
 export { readerTheme };
