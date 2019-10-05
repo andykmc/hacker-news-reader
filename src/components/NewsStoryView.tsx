@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 type Props = {
   storyUrl: string;
@@ -9,6 +10,19 @@ type State = {
   storyTitle: string;
   storyContent: string;
 };
+
+const Wrapper = styled.div`
+  margin-left: ${props => props.theme.overhaul.newsListWidth + 20}px;
+  padding: 20px;
+
+  * {
+    max-width: 100%;
+  }
+
+  pre {
+    white-space: pre-wrap;
+  }
+`;
 
 export default class NewsList extends React.Component<Props> {
   state: State = {
@@ -40,7 +54,7 @@ export default class NewsList extends React.Component<Props> {
     const { storyTitle, storyContent } = this.state;
     const { storyUrl } = this.props;
     return storyContent.length ? (
-      <div>
+      <Wrapper>
         <a href={storyUrl} target="_blank">
           View Story in Oringal
         </a>
@@ -49,7 +63,7 @@ export default class NewsList extends React.Component<Props> {
           dangerouslySetInnerHTML={{ __html: storyContent }}
           style={{}}
         ></div>
-      </div>
+      </Wrapper>
     ) : (
       <></>
     );
