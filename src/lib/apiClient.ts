@@ -38,7 +38,7 @@ export const getAllTopNews = async (): Promise<NewsStory[]> => {
   );
   const allIds = await response.data;
   return <NewsStory[]>await Promise.all(
-    allIds.slice(0, 20).map(async id => {
+    allIds.slice(0, 20).map(async (id: number) => {
       return await getNewsStory(id);
     })
   );

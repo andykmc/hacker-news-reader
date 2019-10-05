@@ -16,7 +16,7 @@ type State = {
 export default class IndexContainer extends React.Component<Props> {
   state: State = {
     newsItems: [],
-    storyUrlOnView: null,
+    storyUrlOnView: '',
   };
 
   componentDidMount = async () => {

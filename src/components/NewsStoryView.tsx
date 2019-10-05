@@ -20,7 +20,7 @@ export default class NewsList extends React.Component<Props> {
     const { storyUrl } = this.props;
   };
 
-  componentDidUpdate = async (prevProps, prevState) => {
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
     const { storyUrl } = this.props;
     if (storyUrl && prevProps.storyUrl !== storyUrl) {
       try {
