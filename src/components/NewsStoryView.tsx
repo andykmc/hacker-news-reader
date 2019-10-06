@@ -23,7 +23,9 @@ const Wrapper = styled.div`
   img {
     display: block;
     margin: 32px auto;
+    height: auto;
   }
+
   pre {
     white-space: pre-wrap;
   }
