@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
 import Readability from 'mozilla-readability';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 type StoryView = {
   title: string;
@@ -29,7 +30,10 @@ const getStoryContent = async (url: string): Promise<StoryView> => {
   }
 };
 
-export default async (req, res) => {
+const storyContentsController = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   res.setHeader('Content-Type', 'application/json');
   const { url } = <StoryViewRequest>req.body;
 
@@ -52,3 +56,5 @@ export default async (req, res) => {
     });
   }
 };
+
+export default storyContentsController;
