@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import Readability from 'readability';
+import Readability from 'mozilla-readability';
 
 type StoryView = {
   title: string;

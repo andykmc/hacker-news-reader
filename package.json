@@ -27,11 +27,13 @@
     "next": "^9.0.7",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "readability": "file:src/lib/readability-master",
+    "mozilla-readability": "file:src/lib/readability-master",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.6.0",
+    "@types/jsdom": "^12.2.4",
+    "@types/mozilla-readability": "^0.1.3",
     "@types/node": "^12.7.8",
     "@types/react": "^16.9.4",
     "@types/styled-components": "^4.1.19",

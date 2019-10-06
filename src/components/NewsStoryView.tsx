@@ -47,12 +47,17 @@ export default class NewsList extends React.Component<Props> {
           url: storyUrl,
         });
         const { title, content } = response.data;
-        this.setState({
-          storyTitle: title,
-          storyContent: content,
-        });
+        this.changeStory(title, content);
       } catch (e) {}
     }
+  };
+
+  changeStory = (title: string, content: string) => {
+    this.setState({
+      storyTitle: title,
+      storyContent: content,
+    });
+    scrollTo(0, 0);
   };
 
   render() {
