@@ -6,6 +6,7 @@
 - TypeScript
 - jsdom
 - Readability.js
+- styled-components
 
 ### Development Flow Tools
 
