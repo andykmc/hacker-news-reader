@@ -22,6 +22,10 @@ const List = styled.ul`
 const ListItem = styled.li`
   padding: 5px 0 5px;
   border-bottom: 1px solid grey;
+
+  &:hover {
+    background: lightgrey;
+  }
 `;
 
 const NewsList: React.FunctionComponent<Props> = ({ items, onClick }) => (
