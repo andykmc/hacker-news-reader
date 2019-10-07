@@ -14,16 +14,9 @@ const IndexWrapper = styled.div`
 `;
 
 const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
-  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const items = await getAllTopNews();
-      setNewsItems(items);
-    };
-    fetch();
-  }, []);
-
+  const newsItems = useNewsItems();
   const [storyUrlOnView, setStoryUrlOnView] = useState('');
+
   const handleNewsItemClick = (url: string) => {
     setStoryUrlOnView(url);
   };
@@ -34,6 +27,18 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
       <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
     </IndexWrapper>
   );
+};
+
+const useNewsItems = () => {
+  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const items = await getAllTopNews();
+      setNewsItems(items);
+    };
+    fetch();
+  }, []);
+  return newsItems;
 };
 
 export default IndexContainer;
