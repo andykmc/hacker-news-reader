@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   width: ${props => props.theme.overhaul.newsListWidth}px;
+  background: white;
 `;
 
 const List = styled.ul`
@@ -20,7 +21,7 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  padding: 5px 0 5px;
+  padding: 5px 10px 5px;
   border-bottom: 1px solid grey;
 
   &:hover {
