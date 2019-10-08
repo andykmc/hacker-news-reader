@@ -47,7 +47,7 @@ const storyContentsController = async (
         throw new Error();
       }
     } else {
-      throw new Error('invalid request method');
+      throw new Error('invalid request');
     }
   } catch (e) {
     res.statusCode = 400;

@@ -1,55 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 import NewsList from '../components/NewsList';
 import NewsStoryView from '../components/NewsStoryView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 
 type Props = {
-  items?: string[];
   userAgent?: string;
 };
 
-type State = {
-  newsItems: NewsStory[];
-  storyUrlOnView: string;
-};
-
 const IndexWrapper = styled.div`
-  /* display: flex; */
-  /* flex-direction: row; */
   max-width: 1200px;
   margin: 0 auto;
 `;
 
-export default class IndexContainer extends React.Component<Props> {
-  state: State = {
-    newsItems: [],
-    storyUrlOnView: '',
+const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
+  const newsItems = useNewsItems();
+  const [storyUrlOnView, setStoryUrlOnView] = useState('');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleNewsItemClick = (url: string) => {
+    setStoryUrlOnView(url);
   };
 
-  componentDidMount = async () => {
-    this.setState({
-      newsItems: await getAllTopNews(),
-    });
+  const handleDrawerToggle = (isOpen: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
+    setIsDrawerOpen(isOpen);
   };
 
-  handleNewsItemClick = (id: string) => {
-    this.setState({
-      storyUrlOnView: id,
-    });
-  };
+  return (
+    <IndexWrapper>
+      <Hidden smDown>
+        <Drawer variant="permanent" open>
+          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
+        </Drawer>
+      </Hidden>
+      <Hidden mdUp>
+        <SwipeableDrawer
+          anchor="bottom"
+          open={isDrawerOpen}
+          onClose={handleDrawerToggle(false)}
+          onOpen={handleDrawerToggle(true)}
+          disableSwipeToOpen={false}
+        >
+          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
+        </SwipeableDrawer>
+      </Hidden>
+      <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
+    </IndexWrapper>
+  );
+};
 
-  render() {
-    const { userAgent } = this.props;
-    const { newsItems, storyUrlOnView } = this.state;
-    return (
-      <IndexWrapper>
-        <NewsList
-          items={newsItems}
-          onClick={this.handleNewsItemClick}
-        ></NewsList>
-        <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
-      </IndexWrapper>
-    );
-  }
-}
+const useNewsItems = () => {
+  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const items = await getAllTopNews();
+      setNewsItems(items);
+    };
+    fetch();
+  }, []);
+  return newsItems;
+};
+
+export default IndexContainer;

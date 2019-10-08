@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useScreenSize } from '../lib/hooks';
 
 type Props = {
   storyUrl: string;
@@ -11,8 +12,15 @@ type State = {
   storyContent: string;
 };
 
-const Wrapper = styled.div`
-  margin-left: ${props => props.theme.overhaul.newsListWidth + 20}px;
+type WrapperProps = {
+  isSmDown: boolean;
+};
+
+const Wrapper = styled.div<WrapperProps>`
+  margin-left: ${props =>
+    props.isSmDown
+      ? 'initial'
+      : props.theme.overhaul.newsListWidth + 20 + 'px'};
   padding: 20px;
   text-align: justify;
 
@@ -31,53 +39,41 @@ const Wrapper = styled.div`
   }
 `;
 
-export default class NewsList extends React.Component<Props> {
-  state: State = {
-    storyTitle: '',
-    storyContent: '',
-  };
+const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
+  const [storyTitle, setStoryTitle] = useState('');
+  const [storyContent, setStoryContent] = useState('');
+  const isSmDown = useScreenSize.isSmallOrDown();
 
-  componentDidMount = async () => {
-    const { storyUrl } = this.props;
-  };
-
-  componentDidUpdate = async (prevProps: Props, prevState: State) => {
-    const { storyUrl } = this.props;
-    if (storyUrl && prevProps.storyUrl !== storyUrl) {
+  useEffect(() => {
+    const fetch = async () => {
       try {
         const response = await axios.post('/api/storyContent', {
           url: storyUrl,
         });
         const { title, content } = response.data;
-        this.changeStory(title, content);
+        changeStory(title, content);
       } catch (e) {}
-    }
-  };
+    };
+    fetch();
+  }, [storyUrl]);
 
-  changeStory = (title: string, content: string) => {
-    this.setState({
-      storyTitle: title,
-      storyContent: content,
-    });
+  const changeStory = (title: string, content: string) => {
+    setStoryTitle(title);
+    setStoryContent(content);
     scrollTo(0, 0);
   };
 
-  render() {
-    const { storyTitle, storyContent } = this.state;
-    const { storyUrl } = this.props;
-    return storyContent.length ? (
-      <Wrapper>
-        <a href={storyUrl} target="_blank">
-          View Story in Oringal
-        </a>
-        <h1>{storyTitle}</h1>
-        <div
-          dangerouslySetInnerHTML={{ __html: storyContent }}
-          style={{}}
-        ></div>
-      </Wrapper>
-    ) : (
-      <></>
-    );
-  }
-}
+  return storyContent.length ? (
+    <Wrapper isSmDown={isSmDown}>
+      <a href={storyUrl} target="_blank">
+        View Story in Oringal
+      </a>
+      <h1>{storyTitle}</h1>
+      <div dangerouslySetInnerHTML={{ __html: storyContent }} style={{}}></div>
+    </Wrapper>
+  ) : (
+    <></>
+  );
+};
+
+export default NewsList;
