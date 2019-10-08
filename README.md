@@ -1,14 +1,15 @@
 # Hacker News Reader
 
-### Frameworks/Tools:
+### Technical Stack:
 
 - NextJS
 - TypeScript
 - jsdom
 - Readability.js
 - styled-components
+- Material UI
 
-### Development Flow Tools
+### Development Practices/Tools
 
 - Prettier
 - husky
