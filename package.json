@@ -21,12 +21,13 @@
     }
   },
   "dependencies": {
+    "@material-ui/core": "^4.5.0",
     "axios": "^0.19.0",
     "jsdom": "^15.1.1",
+    "mozilla-readability": "file:src/lib/readability-master",
     "next": "^9.0.7",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "mozilla-readability": "file:src/lib/readability-master",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
