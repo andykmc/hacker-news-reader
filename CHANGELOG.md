@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.2] - 2019-10-11
+
+### Changed
+
+- update mobile news menu
+
 ## [0.1.1] - 2019-10-09
 
 ### Added
@@ -29,7 +35,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - This CHANGELOG file!
 
-[unreleased]: https://github.com/andykmc/hacker-news-reader/compare/0.1.1...HEAD
+[unreleased]: https://github.com/andykmc/hacker-news-reader/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/andykmc/hacker-news-reader/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/andykmc/hacker-news-reader/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/andykmc/hacker-news-reader/compare/0.0.1...0.1.0
 [0.1.0]: https://github.com/andykmc/hacker-news-reader/compare/0.0.1...0.1.0
