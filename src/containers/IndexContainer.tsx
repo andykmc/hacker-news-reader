@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
+import { Drawer, SwipeableDrawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
 import NewsStoryView from '../components/NewsStoryView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
@@ -13,7 +11,19 @@ type Props = {
 
 const IndexWrapper = styled.div`
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 36px;
+`;
+
+const OpenButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+`;
+
+const OpenButton = styled(Button)`
+  background: lightgreen;
 `;
 
 const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
@@ -23,6 +33,7 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
 
   const handleNewsItemClick = (url: string) => {
     setStoryUrlOnView(url);
+    setIsDrawerOpen(false);
   };
 
   const handleDrawerToggle = (isOpen: boolean) => (
@@ -36,7 +47,6 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
     ) {
       return;
     }
-
     setIsDrawerOpen(isOpen);
   };
 
@@ -48,15 +58,19 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
         </Drawer>
       </Hidden>
       <Hidden mdUp>
-        <SwipeableDrawer
+        <Drawer
           anchor="bottom"
           open={isDrawerOpen}
           onClose={handleDrawerToggle(false)}
-          onOpen={handleDrawerToggle(true)}
-          disableSwipeToOpen={false}
         >
+          <Button onClick={handleDrawerToggle(false)}>Close</Button>
           <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
-        </SwipeableDrawer>
+        </Drawer>
+        <OpenButtonWrapper>
+          <OpenButton onClick={handleDrawerToggle(true)} fullWidth>
+            Open
+          </OpenButton>
+        </OpenButtonWrapper>
       </Hidden>
       <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
     </IndexWrapper>

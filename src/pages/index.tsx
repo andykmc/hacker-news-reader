@@ -1,12 +1,15 @@
 import { NextPage } from 'next';
 import IndexContainer from '../containers/IndexContainer';
+import { StylesProvider } from '@material-ui/styles';
 
 type Props = {
   userAgent?: string;
 };
 
 const IndexPage: NextPage<Props> = ({ userAgent }) => (
-  <IndexContainer userAgent={userAgent}></IndexContainer>
+  <StylesProvider injectFirst>
+    <IndexContainer userAgent={userAgent}></IndexContainer>
+  </StylesProvider>
 );
 
 IndexPage.getInitialProps = async ({ req }) => {
