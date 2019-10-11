@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
+import { LinearProgress } from '@material-ui/core';
 
 type Props = {
   storyUrl: string;
 };
 
-type State = {
-  storyTitle: string;
-  storyContent: string;
+type ProgressWrapperProps = {
+  hidden: boolean;
 };
+
+const ProgressWrapper = styled(LinearProgress)<ProgressWrapperProps>`
+  display: ${props => (props.hidden ? 'none' : 'block')};
+`;
 
 type WrapperProps = {
   isSmDown: boolean;
@@ -42,19 +46,30 @@ const Wrapper = styled.div<WrapperProps>`
 const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyContent, setStoryContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const isSmDown = useScreenSize.isSmallOrDown();
 
   useEffect(() => {
+    let ignore = false;
     const fetch = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.post('/api/storyContent', {
           url: storyUrl,
         });
-        const { title, content } = response.data;
-        changeStory(title, content);
-      } catch (e) {}
+        if (!ignore) {
+          setIsLoading(false);
+          const { title, content } = response.data;
+          changeStory(title, content);
+        }
+      } catch (e) {
+        setIsLoading(false);
+      }
     };
     fetch();
+    return () => {
+      ignore = true;
+    };
   }, [storyUrl]);
 
   const changeStory = (title: string, content: string) => {
@@ -63,16 +78,22 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
     scrollTo(0, 0);
   };
 
-  return storyContent.length ? (
-    <Wrapper isSmDown={isSmDown}>
-      <a href={storyUrl} target="_blank">
-        View Story in Oringal
-      </a>
-      <h1>{storyTitle}</h1>
-      <div dangerouslySetInnerHTML={{ __html: storyContent }} style={{}}></div>
-    </Wrapper>
-  ) : (
-    <></>
+  return (
+    <>
+      <ProgressWrapper hidden={!isLoading}></ProgressWrapper>
+      {storyContent.length ? (
+        <Wrapper isSmDown={isSmDown}>
+          <a href={storyUrl} target="_blank">
+            View Story in Oringal
+          </a>
+          <h1>{storyTitle}</h1>
+          <div
+            dangerouslySetInnerHTML={{ __html: storyContent }}
+            style={{}}
+          ></div>
+        </Wrapper>
+      ) : null}
+    </>
   );
 };
 
