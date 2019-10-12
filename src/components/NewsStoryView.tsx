@@ -14,6 +14,11 @@ type ProgressWrapperProps = {
 
 const ProgressWrapper = styled(LinearProgress)<ProgressWrapperProps>`
   display: ${props => (props.hidden ? 'none' : 'block')};
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1200;
 `;
 
 type WrapperProps = {
@@ -79,10 +84,10 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
   };
 
   return (
-    <>
+    <Wrapper isSmDown={isSmDown}>
       <ProgressWrapper hidden={!isLoading}></ProgressWrapper>
       {storyContent.length ? (
-        <Wrapper isSmDown={isSmDown}>
+        <>
           <a href={storyUrl} target="_blank">
             View Story in Oringal
           </a>
@@ -91,9 +96,9 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
             dangerouslySetInnerHTML={{ __html: storyContent }}
             style={{}}
           ></div>
-        </Wrapper>
+        </>
       ) : null}
-    </>
+    </Wrapper>
   );
 };
 

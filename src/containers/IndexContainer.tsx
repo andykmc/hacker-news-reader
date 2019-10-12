@@ -10,8 +10,14 @@ type Props = {
 };
 
 const IndexWrapper = styled.div`
-  max-width: 1200px;
+  max-width: 1560px;
   margin: 0 auto 36px;
+`;
+
+const LeftDrawer = styled(Drawer)`
+  .MuiDrawer-paperAnchorDockedLeft {
+    left: auto;
+  }
 `;
 
 const OpenButtonWrapper = styled.div`
@@ -53,9 +59,9 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
   return (
     <IndexWrapper>
       <Hidden smDown>
-        <Drawer variant="permanent" open>
+        <LeftDrawer variant="permanent" open>
           <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
-        </Drawer>
+        </LeftDrawer>
       </Hidden>
       <Hidden mdUp>
         <Drawer
