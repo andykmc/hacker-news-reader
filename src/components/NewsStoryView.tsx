@@ -54,6 +54,12 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
   const [isLoading, setIsLoading] = useState(false);
   const isSmDown = useScreenSize.isSmallOrDown();
 
+  const changeStory = (title: string, content: string) => {
+    setStoryTitle(title);
+    setStoryContent(content);
+    scrollTo(0, 0);
+  };
+
   useEffect(() => {
     let ignore = false;
     const fetch = async () => {
@@ -71,17 +77,12 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
         setIsLoading(false);
       }
     };
+
     fetch();
     return () => {
       ignore = true;
     };
   }, [storyUrl]);
-
-  const changeStory = (title: string, content: string) => {
-    setStoryTitle(title);
-    setStoryContent(content);
-    scrollTo(0, 0);
-  };
 
   return (
     <Wrapper isSmDown={isSmDown}>
