@@ -48,7 +48,7 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
+const NewsList = function({ storyUrl }: Props): React.ReactElement {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyContent, setStoryContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -89,7 +89,7 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
       <ProgressWrapper hidden={!isLoading}></ProgressWrapper>
       {storyContent.length ? (
         <>
-          <a href={storyUrl} target="_blank">
+          <a href={storyUrl} target="_blank" rel="noopener noreferrer">
             View Story in Oringal
           </a>
           <h1>{storyTitle}</h1>
