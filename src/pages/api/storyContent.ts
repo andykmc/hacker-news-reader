@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import Readability from 'mozilla-readability';
+import Readability from '@hnr/readability';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 type StoryView = {
