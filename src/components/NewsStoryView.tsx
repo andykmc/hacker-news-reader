@@ -48,6 +48,19 @@ const Wrapper = styled.div<WrapperProps>`
   pre {
     white-space: pre-wrap;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: initial;
+  }
+
+  p {
+    font-size: ${props => (props.isSmDown ? 18 : 20) + 'px'};
+  }
 `;
 
 const NewsList: React.FC<Props> = ({ storyUrl }) => {
