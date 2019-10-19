@@ -1,6 +1,6 @@
 {
   "name": "hacker-news-reader",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "My hacker news reader",
   "scripts": {
     "dev": "next",
