@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { LinearProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { AppState } from '../redux/reducers';
 
 type Props = {
   storyUrl?: string;
@@ -104,7 +105,7 @@ const NewsList = function({ storyUrl }: Props): React.ReactElement {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) => {
   const { id, storyUrl } = state.storyInView || {};
   return { storyUrl };
 };

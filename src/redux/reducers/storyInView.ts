@@ -1,9 +1,15 @@
-import { CHANGE_STORY_IN_VIEW } from '../actionTypes';
+import {
+  CHANGE_STORY_IN_VIEW,
+  StoryInViewState,
+  StoryInViewActionTypes,
+} from '../actionTypes';
 
-const initialState = { id: null, storyUrl: '' };
+const initialState: StoryInViewState = { id: null, storyUrl: '' };
 
-const storyInView = (state = initialState, action) => {
-  console.log('storyInView action', action);
+const storyInView = (
+  state = initialState,
+  action: StoryInViewActionTypes
+): StoryInViewState => {
   switch (action.type) {
     case CHANGE_STORY_IN_VIEW: {
       return { id: action.payload.id, storyUrl: action.payload.storyUrl };

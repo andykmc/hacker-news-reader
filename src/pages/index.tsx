@@ -12,7 +12,7 @@ type Props = {
 const IndexPage: NextPage<Props> = ({ userAgent }) => (
   <Provider store={store}>
     <StylesProvider injectFirst>
-      <IndexContainer userAgent={userAgent}></IndexContainer>
+      <IndexContainer></IndexContainer>
     </StylesProvider>
   </Provider>
 );

@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
 import storyInView from './storyInView';
 
-export default combineReducers({ storyInView });
+export const rootReducer = combineReducers({ storyInView });
+
+export type AppState = ReturnType<typeof rootReducer>;

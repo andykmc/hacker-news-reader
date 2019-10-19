@@ -5,9 +5,7 @@ import NewsStoryView from '../components/NewsStoryView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 
-type Props = {
-  userAgent?: string;
-};
+type Props = {};
 
 const IndexWrapper = styled.div`
   max-width: 1560px;
@@ -32,7 +30,19 @@ const OpenButton = styled(Button)`
   background: lightgreen;
 `;
 
-const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
+const useNewsItems = () => {
+  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const items = await getAllTopNews();
+      setNewsItems(items);
+    };
+    fetch();
+  }, []);
+  return newsItems;
+};
+
+const IndexContainer: React.FunctionComponent<Props> = () => {
   const newsItems = useNewsItems();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -79,18 +89,6 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
       <NewsStoryView></NewsStoryView>
     </IndexWrapper>
   );
-};
-
-const useNewsItems = () => {
-  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const items = await getAllTopNews();
-      setNewsItems(items);
-    };
-    fetch();
-  }, []);
-  return newsItems;
 };
 
 export default IndexContainer;
