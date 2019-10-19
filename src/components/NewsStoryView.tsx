@@ -3,9 +3,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { LinearProgress } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { AppState } from '../redux/reducers';
 
 type Props = {
-  storyUrl: string;
+  storyUrl?: string;
 };
 
 type ProgressWrapperProps = {
@@ -14,6 +16,11 @@ type ProgressWrapperProps = {
 
 const ProgressWrapper = styled(LinearProgress)<ProgressWrapperProps>`
   display: ${props => (props.hidden ? 'none' : 'block')};
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1200;
 `;
 
 type WrapperProps = {
@@ -43,11 +50,17 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
+const NewsList: React.FC<Props> = ({ storyUrl }) => {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyContent, setStoryContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const isSmDown = useScreenSize.isSmallOrDown();
+
+  const displayStory = (title: string, content: string) => {
+    setStoryTitle(title);
+    setStoryContent(content);
+    scrollTo(0, 0);
+  };
 
   useEffect(() => {
     let ignore = false;
@@ -60,41 +73,38 @@ const NewsList: React.FunctionComponent<Props> = ({ storyUrl }) => {
         if (!ignore) {
           setIsLoading(false);
           const { title, content } = response.data;
-          changeStory(title, content);
+          displayStory(title, content);
         }
       } catch (e) {
         setIsLoading(false);
       }
     };
+
     fetch();
     return () => {
       ignore = true;
     };
   }, [storyUrl]);
 
-  const changeStory = (title: string, content: string) => {
-    setStoryTitle(title);
-    setStoryContent(content);
-    scrollTo(0, 0);
-  };
-
   return (
-    <>
-      <ProgressWrapper hidden={!isLoading}></ProgressWrapper>
+    <Wrapper isSmDown={isSmDown}>
+      <ProgressWrapper hidden={!isLoading} />
       {storyContent.length ? (
-        <Wrapper isSmDown={isSmDown}>
-          <a href={storyUrl} target="_blank">
+        <>
+          <a href={storyUrl} target="_blank" rel="noopener noreferrer">
             View Story in Oringal
           </a>
           <h1>{storyTitle}</h1>
-          <div
-            dangerouslySetInnerHTML={{ __html: storyContent }}
-            style={{}}
-          ></div>
-        </Wrapper>
+          <div dangerouslySetInnerHTML={{ __html: storyContent }} style={{}} />
+        </>
       ) : null}
-    </>
+    </Wrapper>
   );
 };
 
-export default NewsList;
+const mapStateToProps = (state: AppState) => {
+  const { id, storyUrl } = state.storyInView || {};
+  return { storyUrl };
+};
+
+export default connect(mapStateToProps)(NewsList);

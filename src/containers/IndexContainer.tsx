@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, SwipeableDrawer, Hidden, Button } from '@material-ui/core';
+import { Drawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
 import NewsStoryView from '../components/NewsStoryView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 
-type Props = {
-  userAgent?: string;
-};
+type Props = {};
 
 const IndexWrapper = styled.div`
-  max-width: 1200px;
+  max-width: 1560px;
   margin: 0 auto 36px;
+`;
+
+const LeftDrawer = styled(Drawer)`
+  .MuiDrawer-paperAnchorDockedLeft {
+    left: auto;
+  }
 `;
 
 const OpenButtonWrapper = styled.div`
@@ -26,13 +30,23 @@ const OpenButton = styled(Button)`
   background: lightgreen;
 `;
 
-const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
+const useNewsItems = () => {
+  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const items = await getAllTopNews();
+      setNewsItems(items);
+    };
+    fetch();
+  }, []);
+  return newsItems;
+};
+
+const IndexContainer: React.FC<Props> = () => {
   const newsItems = useNewsItems();
-  const [storyUrlOnView, setStoryUrlOnView] = useState('');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleNewsItemClick = (url: string) => {
-    setStoryUrlOnView(url);
+  const handleNewsItemClick = () => {
     setIsDrawerOpen(false);
   };
 
@@ -53,9 +67,9 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
   return (
     <IndexWrapper>
       <Hidden smDown>
-        <Drawer variant="permanent" open>
-          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
-        </Drawer>
+        <LeftDrawer variant="permanent" open>
+          <NewsList items={newsItems} onClick={handleNewsItemClick} />
+        </LeftDrawer>
       </Hidden>
       <Hidden mdUp>
         <Drawer
@@ -64,7 +78,7 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
           onClose={handleDrawerToggle(false)}
         >
           <Button onClick={handleDrawerToggle(false)}>Close</Button>
-          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
+          <NewsList items={newsItems} onClick={handleNewsItemClick} />
         </Drawer>
         <OpenButtonWrapper>
           <OpenButton onClick={handleDrawerToggle(true)} fullWidth>
@@ -72,21 +86,9 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
           </OpenButton>
         </OpenButtonWrapper>
       </Hidden>
-      <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
+      <NewsStoryView />
     </IndexWrapper>
   );
-};
-
-const useNewsItems = () => {
-  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const items = await getAllTopNews();
-      setNewsItems(items);
-    };
-    fetch();
-  }, []);
-  return newsItems;
 };
 
 export default IndexContainer;
