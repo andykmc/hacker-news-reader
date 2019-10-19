@@ -1,15 +1,20 @@
+import React from 'react';
 import { NextPage } from 'next';
 import IndexContainer from '../containers/IndexContainer';
 import { StylesProvider } from '@material-ui/styles';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
 type Props = {
   userAgent?: string;
 };
 
 const IndexPage: NextPage<Props> = ({ userAgent }) => (
-  <StylesProvider injectFirst>
-    <IndexContainer userAgent={userAgent}></IndexContainer>
-  </StylesProvider>
+  <Provider store={store}>
+    <StylesProvider injectFirst>
+      <IndexContainer />
+    </StylesProvider>
+  </Provider>
 );
 
 IndexPage.getInitialProps = async ({ req }) => {
