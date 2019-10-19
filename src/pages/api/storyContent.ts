@@ -15,8 +15,8 @@ const getStoryContent = async (url: string): Promise<StoryView> => {
   try {
     if (url && url.length > 0) {
       const dom = await JSDOM.fromURL(url);
-      let reader = new Readability(dom.window.document);
-      let { title, content } = reader.parse();
+      const reader = new Readability(dom.window.document);
+      const { title, content } = reader.parse();
 
       return {
         title: title,
@@ -35,12 +35,12 @@ const storyContentsController = async (
   res: NextApiResponse
 ) => {
   res.setHeader('Content-Type', 'application/json');
-  const { url } = <StoryViewRequest>req.body;
+  const { url } = req.body as StoryViewRequest;
 
   try {
     if (req.method === 'POST') {
       const story = await getStoryContent(url);
-      if (!!story) {
+      if (story) {
         res.statusCode = 200;
         res.send(story);
       } else {

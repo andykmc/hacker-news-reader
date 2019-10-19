@@ -68,7 +68,7 @@ const IndexContainer: React.FC<Props> = () => {
     <IndexWrapper>
       <Hidden smDown>
         <LeftDrawer variant="permanent" open>
-          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
+          <NewsList items={newsItems} onClick={handleNewsItemClick} />
         </LeftDrawer>
       </Hidden>
       <Hidden mdUp>
@@ -78,7 +78,7 @@ const IndexContainer: React.FC<Props> = () => {
           onClose={handleDrawerToggle(false)}
         >
           <Button onClick={handleDrawerToggle(false)}>Close</Button>
-          <NewsList items={newsItems} onClick={handleNewsItemClick}></NewsList>
+          <NewsList items={newsItems} onClick={handleNewsItemClick} />
         </Drawer>
         <OpenButtonWrapper>
           <OpenButton onClick={handleDrawerToggle(true)} fullWidth>
@@ -86,7 +86,7 @@ const IndexContainer: React.FC<Props> = () => {
           </OpenButton>
         </OpenButtonWrapper>
       </Hidden>
-      <NewsStoryView></NewsStoryView>
+      <NewsStoryView />
     </IndexWrapper>
   );
 };

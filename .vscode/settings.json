@@ -5,11 +5,12 @@
     "javascriptreact",
     {
       "language": "typescript",
-      "autoFix": false
+      "autoFix": true
     },
     {
       "language": "typescriptreact",
-      "autoFix": false
+      "autoFix": true
     }
-  ]
+  ],
+  "eslint.autoFixOnSave": true
 }

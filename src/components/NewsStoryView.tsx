@@ -88,17 +88,14 @@ const NewsList: React.FC<Props> = ({ storyUrl }) => {
 
   return (
     <Wrapper isSmDown={isSmDown}>
-      <ProgressWrapper hidden={!isLoading}></ProgressWrapper>
+      <ProgressWrapper hidden={!isLoading} />
       {storyContent.length ? (
         <>
           <a href={storyUrl} target="_blank" rel="noopener noreferrer">
             View Story in Oringal
           </a>
           <h1>{storyTitle}</h1>
-          <div
-            dangerouslySetInnerHTML={{ __html: storyContent }}
-            style={{}}
-          ></div>
+          <div dangerouslySetInnerHTML={{ __html: storyContent }} style={{}} />
         </>
       ) : null}
     </Wrapper>
