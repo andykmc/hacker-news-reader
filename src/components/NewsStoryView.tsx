@@ -3,9 +3,10 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { LinearProgress } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 type Props = {
-  storyUrl: string;
+  storyUrl?: string;
 };
 
 type ProgressWrapperProps = {
@@ -54,7 +55,7 @@ const NewsList = function({ storyUrl }: Props): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
   const isSmDown = useScreenSize.isSmallOrDown();
 
-  const changeStory = (title: string, content: string) => {
+  const displayStory = (title: string, content: string) => {
     setStoryTitle(title);
     setStoryContent(content);
     scrollTo(0, 0);
@@ -71,7 +72,7 @@ const NewsList = function({ storyUrl }: Props): React.ReactElement {
         if (!ignore) {
           setIsLoading(false);
           const { title, content } = response.data;
-          changeStory(title, content);
+          displayStory(title, content);
         }
       } catch (e) {
         setIsLoading(false);
@@ -103,4 +104,9 @@ const NewsList = function({ storyUrl }: Props): React.ReactElement {
   );
 };
 
-export default NewsList;
+const mapStateToProps = state => {
+  const { id, storyUrl } = state.storyInView || {};
+  return { storyUrl };
+};
+
+export default connect(mapStateToProps)(NewsList);

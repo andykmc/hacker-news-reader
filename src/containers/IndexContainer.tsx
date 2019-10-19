@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, SwipeableDrawer, Hidden, Button } from '@material-ui/core';
+import { Drawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
 import NewsStoryView from '../components/NewsStoryView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
@@ -34,11 +34,9 @@ const OpenButton = styled(Button)`
 
 const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
   const newsItems = useNewsItems();
-  const [storyUrlOnView, setStoryUrlOnView] = useState('');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleNewsItemClick = (url: string) => {
-    setStoryUrlOnView(url);
+  const handleNewsItemClick = () => {
     setIsDrawerOpen(false);
   };
 
@@ -78,7 +76,7 @@ const IndexContainer: React.FunctionComponent<Props> = ({ userAgent }) => {
           </OpenButton>
         </OpenButtonWrapper>
       </Hidden>
-      <NewsStoryView storyUrl={storyUrlOnView}></NewsStoryView>
+      <NewsStoryView></NewsStoryView>
     </IndexWrapper>
   );
 };

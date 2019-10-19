@@ -1,0 +1,1 @@
+export const CHANGE_STORY_IN_VIEW = 'CHANGE_STORY_IN_VIEW';
