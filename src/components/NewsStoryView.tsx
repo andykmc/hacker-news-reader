@@ -50,7 +50,7 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList = function({ storyUrl }: Props): React.ReactElement {
+const NewsList: React.FC<Props> = ({ storyUrl }) => {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyContent, setStoryContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);

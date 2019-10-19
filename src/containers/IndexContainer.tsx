@@ -42,7 +42,7 @@ const useNewsItems = () => {
   return newsItems;
 };
 
-const IndexContainer: React.FunctionComponent<Props> = () => {
+const IndexContainer: React.FC<Props> = () => {
   const newsItems = useNewsItems();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 

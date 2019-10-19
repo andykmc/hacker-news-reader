@@ -38,11 +38,11 @@ const ListItem = styled.li`
   }
 `;
 
-const NewsList = function({
+const NewsList: React.FC<Props> = ({
   items,
   onClick,
   changeStoryInViewAction,
-}: Props): React.ReactElement {
+}) => {
   const isSmDown = useScreenSize.isSmallOrDown();
   return (
     <Wrapper isSmDown={isSmDown}>
@@ -66,6 +66,7 @@ const NewsList = function({
     </Wrapper>
   );
 };
+
 export default connect(
   null,
   { changeStoryInViewAction }
