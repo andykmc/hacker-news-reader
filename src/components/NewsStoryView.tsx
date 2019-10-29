@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { LinearProgress } from '@material-ui/core';
@@ -7,7 +6,11 @@ import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers';
 
 type Props = {
+  id?: number;
+  title?: string;
   storyUrl?: string;
+  content?: string;
+  isLoading?: boolean;
 };
 
 type ProgressWrapperProps = {
@@ -63,52 +66,29 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList: React.FC<Props> = ({ storyUrl }) => {
-  const [storyTitle, setStoryTitle] = useState('');
-  const [storyContent, setStoryContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+const NewsList: React.FC<Props> = ({
+  id,
+  storyUrl,
+  title,
+  content,
+  isLoading,
+}) => {
   const isSmDown = useScreenSize.isSmallOrDown();
 
-  const displayStory = (title: string, content: string) => {
-    setStoryTitle(title);
-    setStoryContent(content);
-    scrollTo(0, 0);
-  };
-
   useEffect(() => {
-    let ignore = false;
-    const fetch = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.post('/api/storyContent', {
-          url: storyUrl,
-        });
-        if (!ignore) {
-          setIsLoading(false);
-          const { title, content } = response.data;
-          displayStory(title, content);
-        }
-      } catch (e) {
-        setIsLoading(false);
-      }
-    };
-
-    fetch();
-    return () => {
-      ignore = true;
-    };
-  }, [storyUrl]);
+    scrollTo(0, 0);
+  }, [id]);
 
   return (
     <Wrapper isSmDown={isSmDown}>
       <ProgressWrapper hidden={!isLoading} />
-      {storyContent.length ? (
+      {content.length ? (
         <>
           <a href={storyUrl} target="_blank" rel="noopener noreferrer">
             View Story in Oringal
           </a>
-          <h1>{storyTitle}</h1>
-          <div dangerouslySetInnerHTML={{ __html: storyContent }} style={{}} />
+          <h1>{title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: content }} style={{}} />
         </>
       ) : null}
     </Wrapper>
@@ -116,8 +96,8 @@ const NewsList: React.FC<Props> = ({ storyUrl }) => {
 };
 
 const mapStateToProps = (state: AppState) => {
-  const { id, storyUrl } = state.storyInView || {};
-  return { storyUrl };
+  const { id, storyUrl, title, content, isLoading } = state.storyInView || {};
+  return { id, storyUrl, title, content, isLoading };
 };
 
 export default connect(mapStateToProps)(NewsList);

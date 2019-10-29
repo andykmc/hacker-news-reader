@@ -55,7 +55,10 @@ const NewsList: React.FC<Props> = ({
                 onClick={e => {
                   e.preventDefault();
                   onClick();
-                  changeStoryInViewAction({ id: item.id, storyUrl: item.url });
+                  changeStoryInViewAction({
+                    id: item.id,
+                    storyUrl: item.url,
+                  });
                 }}
               >
                 {item.title}
