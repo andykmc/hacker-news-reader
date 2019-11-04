@@ -50,6 +50,7 @@ const storyContentsController = async (
       throw new Error('invalid request');
     }
   } catch (e) {
+    console.log('[storyContentsController]', e);
     res.statusCode = 400;
     res.send({
       error: e.message,
