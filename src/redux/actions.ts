@@ -5,7 +5,9 @@ import {
   CHANGE_STORY_IN_VIEW_REQUESTED,
   CHANGE_STORY_IN_VIEW_FAILED,
 } from './actionTypes';
+import { ThunkDispatch } from 'redux-thunk';
 import axios from 'axios';
+import { AnyAction } from 'redux';
 
 const requestedAction = () => ({
   type: CHANGE_STORY_IN_VIEW_REQUESTED,
@@ -14,7 +16,7 @@ const requestedAction = () => ({
 export const changeStoryInViewAction = ({
   id,
   storyUrl,
-}: StoryInView) => async dispatch => {
+}: StoryInView) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch(requestedAction());
 
   try {
