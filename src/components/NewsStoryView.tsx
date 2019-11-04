@@ -2,16 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { LinearProgress } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppState } from '../redux/reducers';
 
-type Props = {
-  id?: number;
-  title?: string;
-  storyUrl?: string;
-  content?: string;
-  isLoading?: boolean;
-};
+type Props = {};
 
 type ProgressWrapperProps = {
   hidden: boolean;
@@ -66,14 +60,15 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList: React.FC<Props> = ({
-  id,
-  storyUrl,
-  title,
-  content,
-  isLoading,
-}) => {
+const NewsList: React.FC<Props> = () => {
   const isSmDown = useScreenSize.isSmallOrDown();
+  const id = useSelector((state: AppState) => state.storyInView.id);
+  const storyUrl = useSelector((state: AppState) => state.storyInView.storyUrl);
+  const title = useSelector((state: AppState) => state.storyInView.title);
+  const content = useSelector((state: AppState) => state.storyInView.content);
+  const isLoading = useSelector(
+    (state: AppState) => state.storyInView.isLoading
+  );
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -95,9 +90,4 @@ const NewsList: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: AppState) => {
-  const { id, storyUrl, title, content, isLoading } = state.storyInView || {};
-  return { id, storyUrl, title, content, isLoading };
-};
-
-export default connect(mapStateToProps)(NewsList);
+export default NewsList;

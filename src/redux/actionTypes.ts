@@ -4,19 +4,20 @@ export const CHANGE_STORY_IN_VIEW_FAILED = 'CHANGE_STORY_IN_VIEW_FAILED';
 
 export interface StoryInView {
   id: number | null;
-  title: string;
   storyUrl: string;
-  content: string;
-  isLoading: boolean;
 }
 
-export interface StoryInViewState extends StoryInView {} // eslint-disable-line @typescript-eslint/no-empty-interface
+export interface StoryInViewState extends StoryInView {
+  title: string;
+  content: string;
+  isLoading: boolean;
+} // eslint-disable-line @typescript-eslint/no-empty-interface
 
 interface ChangeStoryInViewAction {
   type:
     | typeof CHANGE_STORY_IN_VIEW_SUCCESS
     | typeof CHANGE_STORY_IN_VIEW_REQUESTED;
-  payload: StoryInView;
+  payload: StoryInViewState;
 }
 
 export type StoryInViewActionTypes = ChangeStoryInViewAction;

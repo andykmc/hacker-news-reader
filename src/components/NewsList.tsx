@@ -2,13 +2,12 @@ import React from 'react';
 import { NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeStoryInViewAction } from '../redux/actions';
 
 type Props = {
   items: NewsStory[];
   onClick: Function;
-  changeStoryInViewAction: Function;
 };
 
 type WrapperProps = {
@@ -38,12 +37,9 @@ const ListItem = styled.li`
   }
 `;
 
-const NewsList: React.FC<Props> = ({
-  items,
-  onClick,
-  changeStoryInViewAction,
-}) => {
+const NewsList: React.FC<Props> = ({ items, onClick }) => {
   const isSmDown = useScreenSize.isSmallOrDown();
+  const dispatch = useDispatch();
   return (
     <Wrapper isSmDown={isSmDown}>
       <List>
@@ -55,10 +51,12 @@ const NewsList: React.FC<Props> = ({
                 onClick={e => {
                   e.preventDefault();
                   onClick();
-                  changeStoryInViewAction({
-                    id: item.id,
-                    storyUrl: item.url,
-                  });
+                  dispatch(
+                    changeStoryInViewAction({
+                      id: item.id,
+                      storyUrl: item.url,
+                    })
+                  );
                 }}
               >
                 {item.title}
@@ -70,7 +68,4 @@ const NewsList: React.FC<Props> = ({
   );
 };
 
-export default connect(
-  null,
-  { changeStoryInViewAction }
-)(NewsList);
+export default NewsList;
