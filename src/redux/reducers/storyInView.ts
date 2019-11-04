@@ -29,12 +29,12 @@ const storyInView = (
     }
     case CHANGE_STORY_IN_VIEW_REQUESTED: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     default: {
-      return state;
+      return { ...state, isLoading: false };
     }
   }
 };
