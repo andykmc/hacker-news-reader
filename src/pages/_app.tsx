@@ -2,6 +2,10 @@ import React from 'react';
 import App from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { readerTheme as theme } from '../common/theme';
+import { Provider } from 'react-redux';
+import { StylesProvider } from '@material-ui/core';
+
+import store from '../redux/store';
 
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for
@@ -19,9 +23,13 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Provider store={store}>
+        <StylesProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </StylesProvider>
+      </Provider>
     );
   }
 }

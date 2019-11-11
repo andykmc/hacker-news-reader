@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
@@ -46,21 +47,23 @@ const NewsList: React.FC<Props> = ({ items, onClick }) => {
         {items.length > 0 &&
           items.map(item => (
             <ListItem key={item.id}>
-              <a
-                href={item.url}
-                onClick={e => {
-                  e.preventDefault();
-                  onClick();
-                  dispatch(
-                    changeStoryInViewAction({
-                      id: item.id,
-                      storyUrl: item.url,
-                    })
-                  );
-                }}
-              >
-                {item.title}
-              </a>
+              <Link href={`/${item.id}`}>
+                <a
+                  // href={item.url}
+                  onClick={e => {
+                    // e.preventDefault();
+                    onClick();
+                    dispatch(
+                      changeStoryInViewAction({
+                        id: item.id,
+                        storyUrl: item.url,
+                      })
+                    );
+                  }}
+                >
+                  {item.title}
+                </a>
+              </Link>
             </ListItem>
           ))}
       </List>
