@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
-import NewsStoryView from '../components/NewsStoryView';
+import NewsView from '../components/NewsView';
 import { getAllTopNews, NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 
@@ -86,7 +86,7 @@ const IndexContainer: React.FC<Props> = () => {
           </OpenButton>
         </OpenButtonWrapper>
       </Hidden>
-      <NewsStoryView />
+      <NewsView />
     </IndexWrapper>
   );
 };

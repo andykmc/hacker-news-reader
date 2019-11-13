@@ -60,14 +60,14 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const NewsList: React.FC<Props> = () => {
+const NewsView: React.FC<Props> = () => {
   const isSmDown = useScreenSize.isSmallOrDown();
-  const id = useSelector((state: AppState) => state.storyInView.id);
-  const storyUrl = useSelector((state: AppState) => state.storyInView.storyUrl);
-  const title = useSelector((state: AppState) => state.storyInView.title);
-  const content = useSelector((state: AppState) => state.storyInView.content);
+  const id = useSelector((state: AppState) => state.newsInView.id);
+  const storyUrl = useSelector((state: AppState) => state.newsInView.storyUrl);
+  const title = useSelector((state: AppState) => state.newsInView.title);
+  const content = useSelector((state: AppState) => state.newsInView.content);
   const isLoading = useSelector(
-    (state: AppState) => state.storyInView.isLoading
+    (state: AppState) => state.newsInView.isLoading
   );
 
   useEffect(() => {
@@ -90,4 +90,4 @@ const NewsList: React.FC<Props> = () => {
   );
 };
 
-export default NewsList;
+export default NewsView;

@@ -1,11 +1,11 @@
 import {
-  CHANGE_STORY_IN_VIEW_SUCCESS,
-  StoryInViewState,
-  StoryInViewActionTypes,
-  CHANGE_STORY_IN_VIEW_REQUESTED,
+  CHANGE_NEWS_IN_VIEW_SUCCESS,
+  NewsInViewState,
+  NewsInViewActionTypes,
+  CHANGE_NEWS_IN_VIEW_REQUESTED,
 } from '../actionTypes';
 
-const initialState: StoryInViewState = {
+const initialState: NewsInViewState = {
   id: null,
   title: '',
   storyUrl: '',
@@ -13,12 +13,12 @@ const initialState: StoryInViewState = {
   isLoading: false,
 };
 
-const storyInView = (
+const newsInView = (
   state = initialState,
-  action: StoryInViewActionTypes
-): StoryInViewState => {
+  action: NewsInViewActionTypes
+): NewsInViewState => {
   switch (action.type) {
-    case CHANGE_STORY_IN_VIEW_SUCCESS: {
+    case CHANGE_NEWS_IN_VIEW_SUCCESS: {
       return {
         id: action.payload.id,
         title: action.payload.title,
@@ -27,7 +27,7 @@ const storyInView = (
         isLoading: false,
       };
     }
-    case CHANGE_STORY_IN_VIEW_REQUESTED: {
+    case CHANGE_NEWS_IN_VIEW_REQUESTED: {
       return {
         ...state,
         isLoading: true,
@@ -39,4 +39,4 @@ const storyInView = (
   }
 };
 
-export default storyInView;
+export default newsInView;
