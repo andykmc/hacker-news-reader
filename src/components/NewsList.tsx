@@ -4,7 +4,7 @@ import { NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { useDispatch } from 'react-redux';
-import { changeStoryInViewAction } from '../redux/actions';
+import { changeNewsInViewAction } from '../redux/actions';
 
 type Props = {
   items: NewsStory[];
@@ -54,9 +54,9 @@ const NewsList: React.FC<Props> = ({ items, onClick }) => {
                     // e.preventDefault();
                     onClick();
                     dispatch(
-                      changeStoryInViewAction({
+                      changeNewsInViewAction({
                         id: item.id,
-                        storyUrl: item.url,
+                        newsUrl: item.url,
                       })
                     );
                   }}

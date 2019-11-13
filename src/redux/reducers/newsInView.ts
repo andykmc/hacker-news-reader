@@ -8,7 +8,7 @@ import {
 const initialState: NewsInViewState = {
   id: null,
   title: '',
-  storyUrl: '',
+  newsUrl: '',
   content: '',
   isLoading: false,
 };
@@ -22,7 +22,7 @@ const newsInView = (
       return {
         id: action.payload.id,
         title: action.payload.title,
-        storyUrl: action.payload.storyUrl,
+        newsUrl: action.payload.newsUrl,
         content: action.payload.content,
         isLoading: false,
       };

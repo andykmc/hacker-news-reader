@@ -63,7 +63,7 @@ const Wrapper = styled.div<WrapperProps>`
 const NewsView: React.FC<Props> = () => {
   const isSmDown = useScreenSize.isSmallOrDown();
   const id = useSelector((state: AppState) => state.newsInView.id);
-  const storyUrl = useSelector((state: AppState) => state.newsInView.storyUrl);
+  const newsUrl = useSelector((state: AppState) => state.newsInView.newsUrl);
   const title = useSelector((state: AppState) => state.newsInView.title);
   const content = useSelector((state: AppState) => state.newsInView.content);
   const isLoading = useSelector(
@@ -79,8 +79,8 @@ const NewsView: React.FC<Props> = () => {
       <ProgressWrapper hidden={!isLoading} />
       {content.length ? (
         <>
-          <a href={storyUrl} target="_blank" rel="noopener noreferrer">
-            View Story in Oringal
+          <a href={newsUrl} target="_blank" rel="noopener noreferrer">
+            View News in Oringal
           </a>
           <h1>{title}</h1>
           <div dangerouslySetInnerHTML={{ __html: content }} style={{}} />

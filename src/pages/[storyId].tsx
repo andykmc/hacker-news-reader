@@ -7,9 +7,9 @@ type Props = {
   userAgent?: string;
 };
 
-const StoryPage: NextPage<Props> = ({ userAgent }) => <IndexContainer />;
+const NewsPage = ({ userAgent }) => <IndexContainer />;
 
-StoryPage.getInitialProps = async ({ req, query, reduxStore }) => {
+NewsPage.getInitialProps = async ({ req, query, reduxStore }) => {
   const { storyId } = query;
   console.log(storyId);
   console.log(reduxStore);
@@ -18,4 +18,4 @@ StoryPage.getInitialProps = async ({ req, query, reduxStore }) => {
   return { userAgent };
 };
 
-export default connect()(StoryPage);
+export default connect()(NewsPage);

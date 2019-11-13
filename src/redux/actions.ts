@@ -13,17 +13,17 @@ const requestedAction = () => ({
   type: CHANGE_NEWS_IN_VIEW_REQUESTED,
 });
 
-export const changeStoryInViewAction = ({ id, storyUrl }: NewsInView) => async (
+export const changeNewsInViewAction = ({ id, newsUrl }: NewsInView) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   dispatch(requestedAction());
 
   try {
-    const response = await axios.post('/api/storyContent', {
-      url: storyUrl,
+    const response = await axios.post('/api/newsContent', {
+      url: newsUrl,
     });
     const { title, content } = response.data;
-    const payload = { id, storyUrl, title, content };
+    const payload = { id, newsUrl, title, content };
     dispatch({ type: CHANGE_NEWS_IN_VIEW_SUCCESS, payload });
   } catch (e) {
     dispatch({ type: CHANGE_NEWS_IN_VIEW_FAILED });
