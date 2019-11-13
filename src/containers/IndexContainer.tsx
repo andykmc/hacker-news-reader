@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Drawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
 import NewsView from '../components/NewsView';
-import { getAllTopNews, NewsStory } from '../lib/apiClient';
 import styled from 'styled-components';
 
 type Props = {};
@@ -30,20 +29,7 @@ const OpenButton = styled(Button)`
   background: lightgreen;
 `;
 
-const useNewsItems = () => {
-  const [newsItems, setNewsItems] = useState<NewsStory[]>([]);
-  useEffect(() => {
-    const fetch = async () => {
-      const items = await getAllTopNews();
-      setNewsItems(items);
-    };
-    fetch();
-  }, []);
-  return newsItems;
-};
-
 const IndexContainer: React.FC<Props> = () => {
-  const newsItems = useNewsItems();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleNewsItemClick = () => {
@@ -68,7 +54,7 @@ const IndexContainer: React.FC<Props> = () => {
     <IndexWrapper>
       <Hidden smDown>
         <LeftDrawer variant="permanent" open>
-          <NewsList items={newsItems} onClick={handleNewsItemClick} />
+          <NewsList onClick={handleNewsItemClick} />
         </LeftDrawer>
       </Hidden>
       <Hidden mdUp>
@@ -78,7 +64,7 @@ const IndexContainer: React.FC<Props> = () => {
           onClose={handleDrawerToggle(false)}
         >
           <Button onClick={handleDrawerToggle(false)}>Close</Button>
-          <NewsList items={newsItems} onClick={handleNewsItemClick} />
+          <NewsList onClick={handleNewsItemClick} />
         </Drawer>
         <OpenButtonWrapper>
           <OpenButton onClick={handleDrawerToggle(true)} fullWidth>

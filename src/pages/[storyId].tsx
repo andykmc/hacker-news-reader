@@ -11,8 +11,8 @@ const NewsPage = ({ userAgent }) => <IndexContainer />;
 
 NewsPage.getInitialProps = async ({ req, query, reduxStore }) => {
   const { storyId } = query;
-  console.log(storyId);
-  console.log(reduxStore);
+  console.log('storyId', storyId);
+  console.log('reduxStore', reduxStore);
 
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   return { userAgent };

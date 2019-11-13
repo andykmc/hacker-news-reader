@@ -2,16 +2,16 @@ import { JSDOM } from 'jsdom';
 import Readability from '@hnr/readability';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-type StoryView = {
+type NewsView = {
   title: string;
   content: string;
 };
 
-type StoryViewRequest = {
+type NewsViewRequest = {
   url: string;
 };
 
-const getStoryContent = async (url: string): Promise<StoryView> => {
+const getNewsContent = async (url: string): Promise<NewsView> => {
   try {
     if (url && url.length > 0) {
       const dom = await JSDOM.fromURL(url);
@@ -30,19 +30,19 @@ const getStoryContent = async (url: string): Promise<StoryView> => {
   }
 };
 
-const storyContentsController = async (
+const newsContentsController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   res.setHeader('Content-Type', 'application/json');
-  const { url } = req.body as StoryViewRequest;
+  const { url } = req.body as NewsViewRequest;
 
   try {
     if (req.method === 'POST') {
-      const story = await getStoryContent(url);
-      if (story) {
+      const news = await getNewsContent(url);
+      if (news) {
         res.statusCode = 200;
-        res.send(story);
+        res.send(news);
       } else {
         throw new Error();
       }
@@ -50,7 +50,7 @@ const storyContentsController = async (
       throw new Error('invalid request');
     }
   } catch (e) {
-    console.log('[storyContentsController]', e);
+    console.log('[newsContentsController]', e);
     res.statusCode = 400;
     res.send({
       error: e.message,
@@ -58,4 +58,4 @@ const storyContentsController = async (
   }
 };
 
-export default storyContentsController;
+export default newsContentsController;
