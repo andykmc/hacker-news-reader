@@ -3,6 +3,7 @@ import { Drawer, Hidden, Button } from '@material-ui/core';
 import NewsList from '../components/NewsList';
 import NewsView from '../components/NewsView';
 import styled from 'styled-components';
+import { useScreenSize } from '../lib/hooks';
 
 type Props = {};
 
@@ -30,6 +31,7 @@ const OpenButton = styled(Button)`
 `;
 
 const IndexContainer: React.FC<Props> = () => {
+  const isSmDown = useScreenSize.isSmallOrDown();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleNewsItemClick = () => {
@@ -52,12 +54,12 @@ const IndexContainer: React.FC<Props> = () => {
 
   return (
     <IndexWrapper>
-      <Hidden smDown>
+      <div hidden={isSmDown}>
         <LeftDrawer variant="permanent" open>
           <NewsList onClick={handleNewsItemClick} />
         </LeftDrawer>
-      </Hidden>
-      <Hidden mdUp>
+      </div>
+      <div hidden={!isSmDown}>
         <Drawer
           anchor="bottom"
           open={isDrawerOpen}
@@ -71,7 +73,7 @@ const IndexContainer: React.FC<Props> = () => {
             Open
           </OpenButton>
         </OpenButtonWrapper>
-      </Hidden>
+      </div>
       <NewsView />
     </IndexWrapper>
   );
