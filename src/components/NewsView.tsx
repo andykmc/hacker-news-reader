@@ -12,7 +12,6 @@ type ProgressWrapperProps = {
 };
 
 const ProgressWrapper = styled(LinearProgress)<ProgressWrapperProps>`
-  display: ${props => (props.hidden ? 'none' : 'block')};
   position: fixed;
   width: 100%;
   left: 0;
