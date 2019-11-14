@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
 import { useScreenSize } from '../lib/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeNewsInViewAction, getNewsListAction } from '../redux/actions';
+import { changeNewsInViewAction } from '../redux/actions';
 import { AppState } from '../redux/reducers';
 
 type Props = {
@@ -43,9 +43,6 @@ const NewsList: React.FC<Props> = ({ onClick }) => {
   const isLoading = useSelector((state: AppState) => state.newsList.isLoading);
   const newsList = useSelector((state: AppState) => state.newsList.list);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getNewsListAction());
-  }, [dispatch]);
 
   return (
     <Wrapper isSmDown={isSmDown}>

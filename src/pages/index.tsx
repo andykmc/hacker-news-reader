@@ -8,12 +8,12 @@ type Props = {
   userAgent?: string;
 };
 
-const IndexPage = ({ userAgent }) => <IndexContainer />;
+const IndexPage = () => <IndexContainer />;
 
 IndexPage.getInitialProps = async ({ req, store }) => {
+  await store.dispatch(getNewsListAction());
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-  // store.dispatch(getNewsListAction());
   return { userAgent };
 };
 
-export default IndexPage;
+export default connect()(IndexPage);
