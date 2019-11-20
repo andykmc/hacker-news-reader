@@ -1,24 +1,30 @@
 import { JSDOM } from 'jsdom';
 import Readability from '@hnr/readability';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getNewsStory } from '../../lib/apiClient';
+import { NewsStory } from '../../lib/apiClient';
 
 type NewsView = {
+  url: string;
   title: string;
   content: string;
 };
 
 type NewsViewRequest = {
-  url: string;
+  id: number;
 };
 
-const getNewsContent = async (url: string): Promise<NewsView> => {
+const getNewsContent = async (id: number): Promise<NewsView> => {
   try {
-    if (url && url.length > 0) {
+    if (!isNaN(parseInt(`${id}`))) {
+      const newsMeta: NewsStory = await getNewsStory(id);
+      const { url } = newsMeta;
       const dom = await JSDOM.fromURL(url);
       const reader = new Readability(dom.window.document);
       const { title, content } = reader.parse();
 
       return {
+        url,
         title: title,
         content: content,
       };
@@ -35,11 +41,11 @@ const newsContentsController = async (
   res: NextApiResponse
 ) => {
   res.setHeader('Content-Type', 'application/json');
-  const { url } = req.body as NewsViewRequest;
+  const { id } = req.body as NewsViewRequest;
 
   try {
     if (req.method === 'POST') {
-      const news = await getNewsContent(url);
+      const news = await getNewsContent(id);
       if (news) {
         res.statusCode = 200;
         res.send(news);

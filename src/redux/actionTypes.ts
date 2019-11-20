@@ -5,10 +5,10 @@ export const CHANGE_NEWS_IN_VIEW_FAILED = 'CHANGE_NEWS_IN_VIEW_FAILED';
 
 export interface NewsInView {
   id: number | null;
-  newsUrl: string;
 }
 
 export interface NewsInViewState extends NewsInView {
+  newsUrl: string;
   title: string;
   content: string;
   isLoading: boolean;

@@ -52,17 +52,17 @@ const NewsList: React.FC<Props> = ({ onClick }) => {
         <List>
           {newsList.map(news => (
             <ListItem key={news.id}>
-              <Link href={`/${news.id}`}>
+              <Link href={`/news/${news.id}`}>
                 <a
                   // href={item.url}
                   onClick={e => {
                     e.preventDefault();
                     onClick();
-                    Router.push(`/${news.id}`);
+                    // Router.push(`/news/${news.id}`);
+                    window.history.pushState({}, '', `/news/${news.id}`);
                     dispatch(
                       changeNewsInViewAction({
                         id: news.id,
-                        newsUrl: news.url,
                       })
                     );
                   }}

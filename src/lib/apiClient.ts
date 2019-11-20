@@ -7,6 +7,8 @@ enum NewsStoryType {
   Poll = 'poll',
   Pollopt = 'pollopt',
 }
+
+// Duplicated with NewsMeta Type
 export type NewsStory = {
   id: number;
   deleted: boolean;
